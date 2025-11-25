@@ -1,0 +1,272 @@
+@font-face {
+  font-family: "Karla";
+  src: url("./../assets/fonts/Karla-VariableFont_wght.ttf") format("TrueType");
+  font-weight: 400 700;
+}
+
+:root {
+  /* colors */
+  --green-dark: hsl(171, 83%, 14%);
+  --green-light: hsl(148, 38%, 91%);
+  --green-medium: hsl(169, 82%, 27%);
+  --grey-dark: hsl(187, 24%, 22%);
+  --grey-medium: hsl(186, 15%, 59%);
+  --red: hsl(0, 66%, 54%);
+  --white: hsl(0, 0%, 100%);
+  /* fonts */
+  --lg: x-large;
+  --md: 1rem;
+  --sm: 0.85rem;
+  /* others */
+  --b-rad: 0.5rem;
+  --fb-margin: 7rem 2rem;
+  --ff-gap: 0.75rem;
+  --form-pg: 2rem;
+  --form-width: 42.25rem;
+  --g-gap: 2rem 1rem;
+  --input-pg: 0.75rem 1rem;
+  --lb-gap: 0.5rem;
+  --outline: 1px solid var(--grey-medium);
+  --para-space: 1.25lh;
+  --success-width: 25rem;
+  --footer-dir: row;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  accent-color: var(--green-medium);
+  scroll-behavior: smooth;
+  font-family: Karla;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  transition: all 300ms linear;
+}
+
+.scrollbar {
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0.65rem;
+  }
+  &::-webkit-scrollbar-track {
+    margin-block: 0.25rem;
+    border-radius: var(--b-rad);
+    background-color: var(--grey-medium);
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 0.15rem solid var(--grey-medium);
+    border-radius: var(--b-rad);
+    background-color: var(--green-medium);
+    cursor: pointer;
+  }
+}
+
+body {
+  position: relative;
+  min-inline-size: 320px;
+  background-color: var(--green-light);
+}
+#success {
+  position: fixed;
+  top: -10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ff-gap);
+  width: var(--success-width);
+  background-color: var(--grey-dark);
+  color: var(--white);
+  padding: 1rem;
+  border-radius: var(--b-rad);
+  h2 {
+    font-size: var(--md);
+  }
+  p {
+    font-weight: lighter;
+    flex-basis: 100%;
+    font-size: var(--sm);
+    line-height: var(--para-space);
+  }
+  &.animate {
+    animation: move-down 2s linear 1;
+  }
+}
+form {
+  display: grid;
+  gap: var(--g-gap);
+  grid-template-columns: repeat(2, 1fr);
+  background-color: var(--white);
+  max-inline-size: var(--form-width);
+  inline-size: 90%;
+  margin-inline: auto;
+  margin-block: var(--fb-margin);
+  padding: var(--form-pg);
+  border-radius: calc(2 * var(--b-rad));
+  .col-span-2 {
+    grid-column: span 2;
+  }
+  h1 {
+    font-size: var(--lg);
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ff-gap);
+    &:has(input + label) {
+      flex-direction: row;
+      justify-content: start;
+      > label {
+        cursor: pointer;
+        text-wrap: nowrap;
+      }
+      &:has([type="checkbox"]) {
+        flex-wrap: wrap;
+      }
+    }
+    input,
+    textarea {
+      padding: var(--input-pg);
+      font-size: var(--md);
+      border: none;
+      border-radius: var(--b-rad);
+      outline: var(--outline);
+      cursor: pointer;
+      &:focus-visible,
+      &:hover {
+        outline-color: var(--green-medium);
+        outline-width: 1.75px;
+      }
+      &[type="radio"],
+      &[type="checkbox"] {
+        outline: none;
+      }
+      &[type="checkbox"] ~ .error-msg {
+        flex-basis: 100%;
+      }
+      &:user-invalid {
+        outline-color: var(--red);
+      }
+    }
+    textarea {
+      box-sizing: content-box;
+      height: 2.5lh;
+      line-height: var(--para-space);
+      resize: none;
+    }
+  }
+  > .form-field > label,
+  legend {
+    display: flex;
+    gap: var(--lb-gap);
+    font-size: var(--sm);
+    &:after {
+      content: "*";
+      color: var(--green-medium);
+    }
+  }
+  fieldset {
+    display: inherit;
+    gap: inherit;
+    row-gap: var(--ff-gap);
+    grid-template-columns: inherit;
+    padding-top: var(--ff-gap);
+    border: none;
+    > .form-field {
+      position: relative;
+      padding: var(--input-pg);
+      background-color: var(--white);
+      border-radius: var(--b-rad);
+      outline: var(--outline);
+      label::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+      &:has(:checked) {
+        background-color: var(--green-light);
+        outline-color: var(--green-medium);
+      }
+    }
+  }
+  button {
+    padding: var(--input-pg);
+    border: none;
+    border-radius: var(--b-rad);
+    background-color: var(--green-medium);
+    color: white;
+    cursor: pointer;
+    &:focus-visible {
+      outline: none;
+      background-color: var(--green-dark);
+    }
+    &:hover {
+      background-color: var(--green-dark);
+    }
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  .error-msg {
+    display: none;
+  }
+  > :has(:user-invalid) > .error-msg {
+    display: block;
+    color: var(--red);
+    font-size: var(--sm);
+  }
+}
+
+footer {
+  display: flex;
+  flex-direction: var(--footer-dir);
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  width: max-content;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+  a {
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--green-medium);
+  }
+  a[target="_blank"]::after {
+    content: "↗";
+    font-size: var(--md);
+    margin-left: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  :root {
+    --footer-dir: column;
+    --success-width: 20rem;
+  }
+  form :has(> label) {
+    grid-column: span 2;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  :root {
+    --fb-margin: 2rem;
+    --ff-gap: 0.5rem;
+    --form-pg: 1rem;
+    --form-width: 95%;
+    --g-gap: 1rem 0rem;
+    --lb-gap: 0.25rem;
+    --success-width: 90%;
+  }
+}
+
+@keyframes move-down {
+  25%,
+  100% {
+    top: 2rem;
+  }
+}
